@@ -4,9 +4,11 @@ const renderizarCards = async (textoBusqueda) =>{
     const respuesta = await cargaPersonajes();
    
     const textoLimpio= textoBusqueda.toLowerCase();
+    console.log(textoLimpio)
 
      //Traigo el section del index
      const Personaje = document.querySelector(".Personaje");
+     Personaje.innerHTML="";
      Personaje.classList.add("personaje");
    
      for (const item of respuesta) {
@@ -30,7 +32,7 @@ const renderizarCards = async (textoBusqueda) =>{
    
        divPersoIma.appendChild(imgPersonaje);
        card.appendChild(divPersoIma);
-       Personaje.appendChild(card);
+      //  Personaje.appendChild(card);
    
        //Div de los textos y botones
        const divPersoTxt = document.createElement("div");
@@ -46,7 +48,7 @@ const renderizarCards = async (textoBusqueda) =>{
        divPersoTxt.appendChild(title);
        divPersoTxt.appendChild(subTitle);
        card.appendChild(divPersoTxt);
-       Personaje.appendChild(card);
+      //  Personaje.appendChild(card);
    
        //Div del boton y la img
        const divBtnIcon = document.createElement("div");
@@ -70,13 +72,13 @@ const renderizarCards = async (textoBusqueda) =>{
         divBtnIcon.appendChild(btn);
         divPersoTxt.appendChild(divBtnIcon);
         card.appendChild(divPersoTxt);
-        Personaje.appendChild(card);
         divBtnIcon.appendChild(basurita);
         divPersoTxt.appendChild(divBtnIcon);
+        card.appendChild(divPersoTxt);
 
         if( textoLimpio === "" || item.displayName.toLowerCase().includes(textoLimpio)){
-        card.appendChild(divPersoTxt);
-        Personaje.appendChild(card);
+          Personaje.appendChild(card);
+          console.log("hola");
        }
    
        //Se borra el card en específico
@@ -90,10 +92,12 @@ const render = async () => {
  await renderizarCards("");
 
  const barraBusqueda = document.querySelector(".barraBusqueda");
- barraBusqueda.addEventListener ("input" , async (e) =>{
-     const textoBusqueda = e.target.value;
+ barraBusqueda.addEventListener ("input" , async (event) =>{
+     const textoBusqueda = event.target.value;
      await renderizarCards(textoBusqueda);
+
  });
+ 
 
 };
 document.addEventListener("DOMContentLoaded", render);
