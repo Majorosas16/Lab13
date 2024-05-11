@@ -10,6 +10,8 @@ const renderizarCards = async (textoBusqueda) =>{
      const Personaje = document.querySelector(".Personaje");
      Personaje.innerHTML="";
      Personaje.classList.add("personaje");
+
+     let seEncontraronPersonajes = false
    
      for (const item of respuesta) {
        //Card es el que contiene la img, los textos y el boton
@@ -76,9 +78,12 @@ const renderizarCards = async (textoBusqueda) =>{
         divPersoTxt.appendChild(divBtnIcon);
         card.appendChild(divPersoTxt);
 
+        let seEncontraronPersonajes = false
+
         if( textoLimpio === "" || item.displayName.toLowerCase().includes(textoLimpio)){
           Personaje.appendChild(card);
-          console.log("hola");
+          seEncontraronPersonajes=true
+       
        }
    
        //Se borra el card en específico
@@ -86,6 +91,23 @@ const renderizarCards = async (textoBusqueda) =>{
          card.remove();
        });
      }
+     if(!seEncontraronPersonajes){
+    const error = document.createElement("img");
+    error.src= "Resources/error.png";
+    error.alt= "error";
+    error.classList.add("ima");
+
+    const mensaje1 = document.createElement("H1");
+    mensaje1.textContent = "¡OOPS!";
+    mensaje1.classList.add("H1");
+    const mensaje2 = document.createElement("p");
+    mensaje2.textContent = "No se encontró ningún personaje";
+    mensaje2.classList.add("p2");
+
+    Personaje.appendChild(error);
+    Personaje.appendChild(mensaje1);
+    Personaje.appendChild(mensaje2);
+       }
 }
 
 const render = async () => {
